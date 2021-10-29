@@ -1,0 +1,14 @@
+server:
+  port: 9015
+
+spring:
+  datasource:
+    url: jdbc:postgresql://revdb-2109.cixlhgine7gs.us-east-2.rds.amazonaws.com:5432/project2
+    username: admin
+    password: adminpw
+    driver-class-name: org.postgresql.Driver
+  jpa:
+   database-platform: org.hibernate.dialect.PostgreSQLDialect
+   show-sql: false
+   hibernate:
+      ddl-auto: create
