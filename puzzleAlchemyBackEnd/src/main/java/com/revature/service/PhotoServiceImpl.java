@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.revature.config.BucketName;
+
 import com.revature.model.Photo;
 import com.revature.repository.PhotoRepo;
 import com.revature.repository.UserRepo;
@@ -41,7 +41,7 @@ public class PhotoServiceImpl implements PhotoService{
         metadata.put("Content-Type", file.getContentType());
         metadata.put("Content-Length", String.valueOf(file.getSize()));
         //Save Image in S3 and then save Todo in the database
-        String path = String.format("%s/%s", BucketName.TODO_IMAGE.getBucketName(), "uploadedPhotos");
+        String path = String.format("%s/%s", "puzzle-alchemy-pieces", "uploadedPhotos");
         String fileName = String.format("%s", file.getOriginalFilename());
         try {
             fileStore.upload(path, fileName, Optional.of(metadata), file.getInputStream());
