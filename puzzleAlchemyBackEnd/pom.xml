@@ -52,6 +52,18 @@
 			<artifactId>validation-api</artifactId>
 		</dependency>
 		
+		 <dependency>
+	        <groupId>org.projectlombok</groupId>
+	        <artifactId>lombok</artifactId> 
+	        <scope>provided</scope>
+	    </dependency>
+	    
+	    <dependency>
+		    <groupId>com.amazonaws</groupId>
+		    <artifactId>aws-java-sdk-s3</artifactId>
+		     <version>1.12.52</version>
+		</dependency>
+				
 	</dependencies>
 
 	<build>
