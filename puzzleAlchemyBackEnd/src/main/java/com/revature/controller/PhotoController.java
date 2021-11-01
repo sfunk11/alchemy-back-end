@@ -31,8 +31,13 @@ public class PhotoController {
 	private PhotoServiceImpl service;
 
 	
-	 @GetMapping
-	    public ResponseEntity<List<Photo>> getPhotos() {
+	 @GetMapping()
+	    public ResponseEntity<List<Photo>> getAllPuzzles() {
+	        return new ResponseEntity<>(service.getAllApprovedPuzzles(), HttpStatus.OK);
+	    }
+	
+	 @GetMapping("/admin/all")
+	    public ResponseEntity<List<Photo>> getAllPhotos() {
 	        return new ResponseEntity<>(service.getallPhotos(), HttpStatus.OK);
 	    }
 
