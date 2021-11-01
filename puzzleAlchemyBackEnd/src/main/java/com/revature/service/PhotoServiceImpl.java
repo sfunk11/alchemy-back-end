@@ -1,9 +1,6 @@
 package com.revature.service;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +40,9 @@ public class PhotoServiceImpl implements PhotoService{
         metadata.put("Content-Type", file.getContentType());
         metadata.put("Content-Length", String.valueOf(file.getSize()));
         //Save Image in S3 and then save Todo in the database
+
         String path = String.format("%s", "puzzle-alchemy-pieces");
+
         String fileName = String.format("%s", file.getOriginalFilename());
         try {
             fileStore.upload(path, fileName, Optional.of(metadata), file.getInputStream());
@@ -73,6 +72,7 @@ public class PhotoServiceImpl implements PhotoService{
         return todos;
     }
 	
+
 	public void splitPhoto(Long id) throws IOException{
 		Photo photo = pRepo.findById(id).get();
 		System.out.println(photo.getTitle());
@@ -86,6 +86,7 @@ public class PhotoServiceImpl implements PhotoService{
 		 if (currentUser.getRoleID() == 1) {
 			 pRepo.approvePhoto(photoId, true);
 			 splitPhoto(photoId);
+
 		 }else throw new IllegalArgumentException("Only the admin can approve photos");
 		
 	}

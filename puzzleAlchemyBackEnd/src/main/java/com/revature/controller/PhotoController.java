@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.revature.model.Photo;
 import com.revature.service.PhotoServiceImpl;
+import com.revature.service.PhotoService;
 
 import lombok.AllArgsConstructor;
 
@@ -26,7 +27,9 @@ import lombok.AllArgsConstructor;
 @CrossOrigin("*")
 public class PhotoController {
 
+
 	private PhotoServiceImpl service;
+
 	
 	 @GetMapping
 	    public ResponseEntity<List<Photo>> getPhotos() {
@@ -49,6 +52,7 @@ public class PhotoController {
 	        return service.downloadPhoto(id);
 	    }
 	    
+
 	    @GetMapping(value = "/admin")
 	    public void approvePuzzle(@RequestParam("adminId") int adminId, @RequestParam("photoId") Long photoId) throws IOException {
 	    	
@@ -57,3 +61,4 @@ public class PhotoController {
 	    }
 	   
 }
+

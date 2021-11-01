@@ -31,7 +31,9 @@ public class Photo {
 	    @JoinColumn(name = "uploader", nullable=false )
 	    private User uploader;
 	    private String category;
+
 	    @Value("false")
 	    private boolean isApproved;
+
 	
 }

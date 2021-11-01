@@ -1,7 +1,6 @@
 package com.revature.util;
 
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -23,6 +22,7 @@ public class ImageSplit {
 	@Autowired
 	private static FileStore fileStore;
 
+
 		
 //	    public static void main(String[] args) throws IOException {
 //	        // Setting Chrome as an agent
@@ -39,6 +39,7 @@ public class ImageSplit {
 
 	        // initalizing rows and columns
 	
+
 	public static void splitImage(String photoFileName ) throws IOException{
 		 URL url = new URL("https://puzzle-alchemy-pieces.s3.us-east-2.amazonaws.com/" + photoFileName);
 		 System.out.println(url);
@@ -48,6 +49,7 @@ public class ImageSplit {
 		int rows = 10;
 	        int columns = 1;
 	        int images = rows * columns;
+
 	        
 	        // initializing array to hold subimages
 	        BufferedImage imgs[] = new BufferedImage[images];
@@ -109,6 +111,7 @@ public class ImageSplit {
 		        fileStore.upload(path, fileName, Optional.of(metadata), piece);
 		     }
 		     
+
 	}
 	}
 
