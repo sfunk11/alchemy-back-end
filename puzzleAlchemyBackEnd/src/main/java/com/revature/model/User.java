@@ -19,11 +19,12 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int userID;
 	
-	@Column(name="user_uname", unique=true, nullable=false)
+	@Column(name="user_uname")
 	private String uName;
 	
-	
-	@Column(name="user_email")
+
+	@Column(name="user_email", unique=true, nullable=false)
+
 	private String email;
 	
 	@Column(name="user_fname")
