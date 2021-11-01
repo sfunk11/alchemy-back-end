@@ -1,11 +1,18 @@
 package com.revature.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.stereotype.Repository;
 
 import com.revature.model.Photo;
 
-public interface PhotoRepo extends CrudRepository<Photo, Long> {
+@Repository
+public interface PhotoRepo extends JpaRepository<Photo, Long> {
 	
 	Photo findByTitle(String title);
+	
+	@Procedure("approvephoto")
+	void approvePhoto(int photoId, boolean isApproved);
+	
 
 }

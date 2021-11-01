@@ -1,5 +1,6 @@
 package com.revature.service;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,12 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import java.awt.image.BufferedImage;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import com.revature.model.Photo;
+import com.revature.model.User;
 import com.revature.repository.PhotoRepo;
 import com.revature.repository.UserRepo;
 import com.revature.util.ImageSplit;
@@ -28,6 +28,8 @@ public class PhotoServiceImpl implements PhotoService{
 	private final FileStore fileStore;
 	private final PhotoRepo pRepo;
 	private final UserRepo uRepo;
+	private UserService uServ;
+	
 
 	@Override
 	public Photo savePhoto(String title, String description, MultipartFile file, String uploader) {
@@ -78,6 +80,15 @@ public class PhotoServiceImpl implements PhotoService{
 		
 		BufferedImage[] imagePieces = ImageSplit.splitImage(targetStream);
 		return imagePieces;
+	}
+
+	public void approvePhoto(int userId, int photoId) {
+		
+		 User currentUser = uServ.getUserByUserID(userId);
+		 if (currentUser.getRoleID() == 2) {
+			 pRepo.approvePhoto(photoId, true);
+		 }else throw new IllegalArgumentException("Only the admin can approve photos");
+		
 	}
 
 }
