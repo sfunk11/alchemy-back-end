@@ -35,6 +35,10 @@ public class UserService {
 		return uRepo.findByuName(username);
 	}
 	
+	public User getUserByEmail(String email) {
+		return uRepo.findByEmail(email);
+	}
+	
 	public List<User> getUserByRoleID(int id){
 		return uRepo.findByRoleID(id);
 	}

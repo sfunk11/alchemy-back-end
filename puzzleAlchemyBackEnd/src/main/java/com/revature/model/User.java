@@ -1,10 +1,13 @@
 package com.revature.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,7 +22,9 @@ public class User {
 	@Column(name="user_uname")
 	private String uName;
 	
+
 	@Column(name="user_email", unique=true, nullable=false)
+
 	private String email;
 	
 	@Column(name="user_fname")
@@ -30,6 +35,9 @@ public class User {
 	
 	@Column(name="user_role")
 	private int roleID;
+	
+	@OneToMany(mappedBy="uploader")
+	private List<Photo> photos;
 	
 	public User() {
 		
