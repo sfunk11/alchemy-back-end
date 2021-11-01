@@ -13,6 +13,6 @@ public interface PhotoService {
 	Photo savePhoto (String title, String description, MultipartFile file, String uploader);
 	byte[] downloadPhoto (Long id);
 	List<Photo> getallPhotos();
-	public BufferedImage[] splitPhoto(Long id)throws IOException;
+	public void splitPhoto(Long id)throws IOException;
 	
 }

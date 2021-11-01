@@ -43,7 +43,7 @@ public class PhotoServiceImpl implements PhotoService{
         metadata.put("Content-Type", file.getContentType());
         metadata.put("Content-Length", String.valueOf(file.getSize()));
         //Save Image in S3 and then save Todo in the database
-        String path = String.format("%s/%s", "puzzle-alchemy-pieces", "uploadedPhotos");
+        String path = String.format("%s", "puzzle-alchemy-pieces");
         String fileName = String.format("%s", file.getOriginalFilename());
         try {
             fileStore.upload(path, fileName, Optional.of(metadata), file.getInputStream());
@@ -73,20 +73,19 @@ public class PhotoServiceImpl implements PhotoService{
         return todos;
     }
 	
-	public BufferedImage[] splitPhoto(Long id) throws IOException{
+	public void splitPhoto(Long id) throws IOException{
 		Photo photo = pRepo.findById(id).get();
-		byte[] image = fileStore.download(photo.getImagePath(), photo.getImageFileName());
-		InputStream targetStream = new ByteArrayInputStream(image);
-		
-		BufferedImage[] imagePieces = ImageSplit.splitImage(targetStream);
-		return imagePieces;
+		System.out.println(photo.getTitle());
+		 ImageSplit.splitImage(photo.getImageFileName());
+	
 	}
 
-	public void approvePhoto(int userId, int photoId) {
+	public void approvePhoto(int userId, Long photoId) throws IOException {
 		
 		 User currentUser = uServ.getUserByUserID(userId);
-		 if (currentUser.getRoleID() == 2) {
+		 if (currentUser.getRoleID() == 1) {
 			 pRepo.approvePhoto(photoId, true);
+			 splitPhoto(photoId);
 		 }else throw new IllegalArgumentException("Only the admin can approve photos");
 		
 	}

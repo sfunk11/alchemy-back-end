@@ -1,6 +1,5 @@
 package com.revature.controller;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 
@@ -17,17 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.revature.model.Photo;
-import com.revature.service.PhotoService;
+import com.revature.service.PhotoServiceImpl;
 
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("api/photo")
+@RequestMapping("/photo")
 @AllArgsConstructor
 @CrossOrigin("*")
 public class PhotoController {
 
-	private PhotoService service;
+	private PhotoServiceImpl service;
 	
 	 @GetMapping
 	    public ResponseEntity<List<Photo>> getPhotos() {
@@ -50,8 +49,11 @@ public class PhotoController {
 	        return service.downloadPhoto(id);
 	    }
 	    
-	    @GetMapping(value="/pieces/{id}")
-	    public ResponseEntity<BufferedImage[]> createPieces(@RequestParam("id") Long id) throws IOException{
-	    	return new ResponseEntity<BufferedImage[]>(service.splitPhoto(id), HttpStatus.OK);
+	    @GetMapping(value = "/admin")
+	    public void approvePuzzle(@RequestParam("adminId") int adminId, @RequestParam("photoId") Long photoId) throws IOException {
+	    	
+	    	service.approvePhoto(adminId, photoId);
+	    	
 	    }
+	   
 }

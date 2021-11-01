@@ -6,6 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,5 +31,7 @@ public class Photo {
 	    @JoinColumn(name = "uploader", nullable=false )
 	    private User uploader;
 	    private String category;
+	    @Value("false")
+	    private boolean isApproved;
 	
 }

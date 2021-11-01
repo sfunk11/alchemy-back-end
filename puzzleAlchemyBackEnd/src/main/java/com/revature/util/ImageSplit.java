@@ -1,18 +1,27 @@
 package com.revature.util;
 
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
-import org.springframework.core.io.InputStreamResource;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.revature.service.FileStore;
 
 public class ImageSplit {
 
+	@Autowired
+	private static FileStore fileStore;
 
 		
 //	    public static void main(String[] args) throws IOException {
@@ -30,11 +39,15 @@ public class ImageSplit {
 
 	        // initalizing rows and columns
 	
-	public static BufferedImage[] splitImage(InputStream is) throws IOException{
-	        int rows = 10;
+	public static void splitImage(String photoFileName ) throws IOException{
+		 URL url = new URL("https://puzzle-alchemy-pieces.s3.us-east-2.amazonaws.com/" + photoFileName);
+		 System.out.println(url);
+	        InputStream is = url.openStream();
+	        BufferedImage image = ImageIO.read(is);
+		
+		int rows = 10;
 	        int columns = 1;
 	        int images = rows * columns;
-	        BufferedImage image = ImageIO.read(is);
 	        
 	        // initializing array to hold subimages
 	        BufferedImage imgs[] = new BufferedImage[images];
@@ -74,9 +87,28 @@ public class ImageSplit {
 //	            ImageIO.write(imgs[i], "jpg", outputFile);
 //	        }
 //	        System.out.println("Sub-images have been created.");
+	       
 //	    }
 //	
-		return imgs;
+		     for (int i = 0; i<images; i++) {   
+		    	 Map<String, String> metadata = new HashMap<String,String>();
+		    	 ByteArrayOutputStream os = new ByteArrayOutputStream();
+		    	 ImageIO.write(imgs[i], "jpg", os);
+		    	 InputStream piece = new ByteArrayInputStream(os.toByteArray());
+	
+		      
+		    	
+		    	 String directory = photoFileName.substring(0,photoFileName.lastIndexOf('.'));
+//		    	
+		    	
+		    	String path = String.format("%s/%s", "puzzle-alchemy-pieces", directory);
+		    	System.out.println(path);
+		        String fileName = directory+ "_" + i + ".jpg";
+		        System.out.println(fileName);
+		        System.out.println(piece.toString());
+		        fileStore.upload(path, fileName, Optional.of(metadata), piece);
+		     }
+		     
 	}
 	}
 
