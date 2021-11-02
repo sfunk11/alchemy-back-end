@@ -7,8 +7,8 @@ import java.util.Properties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.AWSCredentialsProviderChain;
+import com.amazonaws.auth.InstanceProfileCredentialsProvider;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -32,14 +32,13 @@ public class AmazonConfig {
     
     @Bean
     public AmazonS3 s3() {
-    	String key = p.getProperty("AWS_ACCESS_KEY_ID");
-    	String secret = p.getProperty("AWS_SECRET_ACCESS_KEY");
-        AWSCredentials awsCredentials =
-                new BasicAWSCredentials(key, secret);
+    	
         return AmazonS3ClientBuilder
                 .standard()
                 .withRegion("us-east-2")
-                .withCredentials(new ProfileCredentialsProvider())
+                .withCredentials(new AWSCredentialsProviderChain(
+                		new InstanceProfileCredentialsProvider(),
+                		new ProfileCredentialsProvider()))
                 .build();
 
     }
