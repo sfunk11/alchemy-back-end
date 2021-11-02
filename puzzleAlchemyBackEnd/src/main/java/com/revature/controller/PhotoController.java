@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,12 +18,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.revature.model.Photo;
 import com.revature.service.PhotoServiceImpl;
-import com.revature.service.PhotoService;
 
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/photo")
+@RequestMapping("/photos")
 @AllArgsConstructor
 @CrossOrigin("*")
 public class PhotoController {
@@ -36,7 +36,7 @@ public class PhotoController {
 	        return new ResponseEntity<>(service.getAllApprovedPuzzles(), HttpStatus.OK);
 	    }
 	
-	 @GetMapping("/admin/all")
+	 @GetMapping("/admin")
 	    public ResponseEntity<List<Photo>> getAllPhotos() {
 	        return new ResponseEntity<>(service.getallPhotos(), HttpStatus.OK);
 	    }
@@ -58,11 +58,16 @@ public class PhotoController {
 	    }
 	    
 
-	    @GetMapping(value = "/admin")
-	    public void approvePuzzle(@RequestParam("adminId") int adminId, @RequestParam("photoId") Long photoId) throws IOException {
+	    @PostMapping(value = "/admin/approve/{adminId}/{photoId}")
+	    public void approvePuzzle(@PathVariable("adminId") int adminId, @PathVariable("photoId") Long photoId) throws IOException {
 	    	
 	    	service.approvePhoto(adminId, photoId);
 	    	
+	    }
+	    
+	    @DeleteMapping("admin/reject/{adminId}/{photoId}")
+	    public ResponseEntity<Object> deletePhoto(@PathVariable("adminId") int adminId, @PathVariable("photoId") Long photoId) {
+	    	return new ResponseEntity<Object>(service.deleteRejectedPhoto(adminId,photoId), HttpStatus.ACCEPTED);
 	    }
 	   
 }
