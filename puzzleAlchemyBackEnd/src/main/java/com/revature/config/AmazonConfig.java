@@ -7,9 +7,7 @@ import java.util.Properties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.amazonaws.auth.AWSCredentialsProviderChain;
-import com.amazonaws.auth.InstanceProfileCredentialsProvider;
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
@@ -36,9 +34,7 @@ public class AmazonConfig {
         return AmazonS3ClientBuilder
                 .standard()
                 .withRegion("us-east-2")
-                .withCredentials(new AWSCredentialsProviderChain(
-                		new InstanceProfileCredentialsProvider(),
-                		new ProfileCredentialsProvider()))
+                .withCredentials(new DefaultAWSCredentialsProviderChain())
                 .build();
 
     }
