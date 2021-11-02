@@ -19,13 +19,7 @@ public class AmazonConfig {
 	Properties p= new Properties();
     
 	public AmazonConfig() {
-		is = cl.getResourceAsStream("aws.properties");
-		try {
-			p.load(is);
-		}catch(IOException e) {
-			
-			
-		}
+		
 	}
     
     @Bean
