@@ -12,7 +12,7 @@ public interface PhotoRepo extends JpaRepository<Photo, Long> {
 	Photo findByTitle(String title);
 	
 	@Procedure("approvephoto")
-	void approvePhoto(int photoId, boolean isApproved);
-	
+	void approvePhoto(Long photoId, boolean isApproved);
+
 
 }

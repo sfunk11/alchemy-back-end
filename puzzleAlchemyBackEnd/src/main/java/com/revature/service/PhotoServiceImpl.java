@@ -1,7 +1,7 @@
 package com.revature.service;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.imageio.ImageIO;
+
+import java.awt.image.BufferedImage;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,7 +46,9 @@ public class PhotoServiceImpl implements PhotoService{
         metadata.put("Content-Type", file.getContentType());
         metadata.put("Content-Length", String.valueOf(file.getSize()));
         //Save Image in S3 and then save Todo in the database
-        String path = String.format("%s/%s", "puzzle-alchemy-pieces", "uploadedPhotos");
+
+        String path = String.format("%s", "puzzle-alchemy-pieces");
+
         String fileName = String.format("%s", file.getOriginalFilename());
         try {
             fileStore.upload(path, fileName, Optional.of(metadata), file.getInputStream());
@@ -68,25 +73,53 @@ public class PhotoServiceImpl implements PhotoService{
 
 	@Override
 	public List<Photo> getallPhotos() {
-		List<Photo> todos = new ArrayList<>();
-        pRepo.findAll().forEach(todos::add);
-        return todos;
+		List<Photo> photos = new ArrayList<>();
+        pRepo.findAll().forEach(photos::add);
+        
+        return photos;
     }
 	
-	public BufferedImage[] splitPhoto(Long id) throws IOException{
+	public List<Photo> getAllApprovedPuzzles(){
+		List<Photo> photos = new ArrayList<>();
+		pRepo.findAll().forEach(photos::add);
+		for(Photo photo:photos) {
+			if (photo.isApproved() == false){
+				photos.remove(photo);
+			}
+		}
+		return photos;
+	}
+	
+
+	public void splitPhoto(Long id) throws IOException{
 		Photo photo = pRepo.findById(id).get();
-		byte[] image = fileStore.download(photo.getImagePath(), photo.getImageFileName());
-		InputStream targetStream = new ByteArrayInputStream(image);
-		
-		BufferedImage[] imagePieces = ImageSplit.splitImage(targetStream);
-		return imagePieces;
+		System.out.println(photo.getTitle());
+		 BufferedImage[] images =ImageSplit.splitImage(photo.getImageFileName());
+		  for (int i = 0; i<10; i++) {   
+		    	 Map<String, String> metadata = new HashMap<String,String>();
+		    	 ByteArrayOutputStream os = new ByteArrayOutputStream();
+		    	 ImageIO.write(images[i], "jpg", os);
+		    	 InputStream piece = new ByteArrayInputStream(os.toByteArray());
+	
+		      
+		    	
+		    	 String directory = photo.getImageFileName().substring(0,photo.getImageFileName().lastIndexOf('.'));	    	
+		    	
+		    	String path = String.format("%s/%s", "puzzle-alchemy-pieces", directory);
+		        String fileName = directory+ "_" + i + ".jpg";
+		        System.out.println(piece.toString());
+		        fileStore.upload(path, fileName, Optional.of(metadata), piece);
+		     }
+	
 	}
 
-	public void approvePhoto(int userId, int photoId) {
+	public void approvePhoto(int userId, Long photoId) throws IOException {
 		
 		 User currentUser = uServ.getUserByUserID(userId);
-		 if (currentUser.getRoleID() == 2) {
+		 if (currentUser.getRoleID() == 1) {
 			 pRepo.approvePhoto(photoId, true);
+			 splitPhoto(photoId);
+
 		 }else throw new IllegalArgumentException("Only the admin can approve photos");
 		
 	}

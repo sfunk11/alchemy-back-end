@@ -36,7 +36,8 @@ public class UserController {
 	
 	@GetMapping("/initial")
 	public ResponseEntity<List<User>> insertInitialValues(){
-		List<User> uList = new ArrayList<User>(Arrays.asList(new User("SFunk", "borley1@gmail.com", "Sam", "Funk", 1), new User("CVoid", "CVoid@gmail.com", "Cass", "Void", 0), 
+		List<User> uList = new ArrayList<User>(Arrays.asList(new User("SFunk", "borley1@gmail.com", "Sam", "Funk", 1), new User("CVoid", "demonspawndaemnyxea@gmail.com", "Cass", "Void", 0), 
+
 				new User("MNieves", "MNieves@gmail.com", "Michael", "Nieves", 0), new User("SHarrington", "SHarrington@gmail.com", "Shawn", "Harrington", 0), 
 				new User("JVeliz", "JVigil@gmail.com", "Joe", "Veliz", 0)));
 		for(User user: uList) {
