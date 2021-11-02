@@ -123,5 +123,15 @@ public class PhotoServiceImpl implements PhotoService{
 		 }else throw new IllegalArgumentException("Only the admin can approve photos");
 		
 	}
+	
+	public String deleteRejectedPhoto(int userId, Long photoId) {
+		User currentUser = uServ.getUserByUserID(userId);
+		Photo photo = pRepo.getById(photoId);
+		if(currentUser.getRoleID() == 1) {
+			pRepo.deleteById(photoId);
+			fileStore.deletePhoto(photo.getImagePath(), photo.getImageFileName());
+			return "Photo deleted.";
+		}else throw new IllegalArgumentException("Only the admin can reject photos.");
+	} 
 
 }

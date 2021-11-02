@@ -19,7 +19,7 @@ import com.revature.model.User;
 import com.revature.service.UserService;
 
 @RestController
-@RequestMapping(value="/user")
+@RequestMapping(value="/users")
 public class UserController {
 	
 	private UserService uServ;

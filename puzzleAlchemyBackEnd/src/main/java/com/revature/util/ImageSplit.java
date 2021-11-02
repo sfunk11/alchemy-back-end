@@ -9,31 +9,10 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.revature.service.FileStore;
 
 public class ImageSplit {
 
-	@Autowired
-	private static FileStore fileStore;
-
-
-		
-//	    public static void main(String[] args) throws IOException {
-//	        // Setting Chrome as an agent
-//	        System.setProperty("http.agent", "Chrome");
-//
-////	        // reading the original image file
-////	        File file = new File("/Users/jvv/Downloads/catface.jpeg");
-////	        FileInputStream sourceFile = new FileInputStream(file);
-////	        
-//	        // reading the file from a URL
-//	        URL url = new URL("https://www.educative.io/api/edpresso/shot/5120209133764608/image/5075298506244096/test.jpg");
-//	        InputStream is = url.openStream();
-//	        BufferedImage image = ImageIO.read(is);
-
-	        // initalizing rows and columns
 	
 
 	public static BufferedImage[] splitImage(String photoFileName ) throws IOException{
@@ -90,24 +69,6 @@ public class ImageSplit {
 	        	return imgs;
 	        
 
-//		    for (int i = 0; i<images; i++) {   
-//		    	 Map<String, String> metadata = new HashMap<String,String>();
-//		    	 ByteArrayOutputStream os = new ByteArrayOutputStream();
-//		    	 ImageIO.write(imgs[i], "jpg", os);
-//		    	 InputStream piece = new ByteArrayInputStream(os.toByteArray());
-//	
-//		      
-//		    	
-//		    	 String directory = photoFileName.substring(0,photoFileName.lastIndexOf('.'));
-////		    	
-//		    	
-//		    	String path = String.format("%s/%s", "puzzle-alchemy-pieces", directory);
-//		    	System.out.println(path);
-//		        String fileName = directory+ "_" + i + ".jpg";
-//		        System.out.println(fileName);
-//		        System.out.println(piece.toString());
-//		        fileStore.upload(path, fileName, Optional.of(metadata), piece);
-//		     }
 		     
 
 		     

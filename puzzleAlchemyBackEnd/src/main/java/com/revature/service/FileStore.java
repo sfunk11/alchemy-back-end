@@ -47,5 +47,13 @@ public class FileStore {
             throw new IllegalStateException("Failed to download the file", e);
         }
     }
+    
+    public void deletePhoto(String path, String key) {
+    	try {
+    		amazonS3.deleteObject(path, key);
+    	}catch (AmazonServiceException e) {
+    		throw new IllegalStateException("Failed to delete the file", e);
+    	}
+    }
 
 }
