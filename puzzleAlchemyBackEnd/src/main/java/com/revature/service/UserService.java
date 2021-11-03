@@ -28,31 +28,30 @@ public class UserService {
 	}
 	
 	public void insertUser(User user) {
+		
 		uRepo.save(user);
 	}
 	
-	public User getUserByUsername(String username) {
-		return uRepo.findByuName(username);
-	}
 	
 	public User getUserByEmail(String email) {
 		return uRepo.findByEmail(email);
 	}
-	
-	public List<User> getUserByRoleID(int id){
-		return uRepo.findByRoleID(id);
-	}
+
 	
 	public User getUserByUserID(int id) {
 		return uRepo.findByUserID(id);
 	}
 	
-	public User getUserByUsernameAndEmail(String username, String email) {
-		return uRepo.findByuNameAndEmail(username, email);
-	}
 	
-	public void deleteUser(User user) {
-		uRepo.delete(user);
+	public String deleteUser(int adminId,User user) {
+		
+		User admin = uRepo.findByUserID(adminId);
+		if(admin.getRoleID() == 1) {
+			uRepo.delete(user);
+			return "User Deleted";
+		}else throw new IllegalArgumentException("Only the admin can delete users");
+		
+		
 	}
 	
 	public void updateUser(User user) {

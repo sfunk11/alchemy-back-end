@@ -51,33 +51,52 @@ public class UserController {
 		return new ResponseEntity<List<User>>(uServ.getAllUsers(), HttpStatus.OK);
 	}
 	
-	@GetMapping("/{username}")
-	public ResponseEntity<User> getUserByUsername(@PathVariable("username") String uName){
-		User user = uServ.getUserByUsername(uName);
+	@GetMapping("/{id}")
+	public ResponseEntity<User> getUserByUserID(@PathVariable("id") int userId){
+		User user = uServ.getUserByUserID(userId);
 		if(user == null) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/{username}")
-	public ResponseEntity<String> deleteUser(@PathVariable("username") String uName){
-		User user = uServ.getUserByUsername(uName);
+	@GetMapping("/email/{email}")
+	public ResponseEntity<User> getUserByUserID(@PathVariable("email") String email){
+		User user = uServ.getUserByEmail(email);
 		if(user == null) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}
-		uServ.deleteUser(user);
-		return new ResponseEntity<String>(uName + " was deleted.", HttpStatus.ACCEPTED);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/admin/{id}")
+	public ResponseEntity<String> deleteUser(@PathVariable("admin") int adminId, @PathVariable("id") int userId){
+		User user  = uServ.getUserByUserID(userId);
+		if(user == null) {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+		uServ.deleteUser(adminId, user);
+		return new ResponseEntity<String>("User was deleted.", HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping()
 	public ResponseEntity<Object> insertUser(@RequestBody User user){
 		System.out.println(user);
-		if(uServ.getUserByUsername(user.getuName()) != null) {
+		if(uServ.getUserByUserID(user.getUserID()) != null) {
 			return new ResponseEntity<>(user.getuName() + " already exists!", HttpStatus.FORBIDDEN);
 		}
 		uServ.insertUser(user);
-		return new ResponseEntity<>(uServ.getUserByUsername(user.getuName()), HttpStatus.CREATED);
+		return new ResponseEntity<>(uServ.getUserByUserID(user.getUserID()), HttpStatus.CREATED);
+	}
+	
+	@PostMapping ("/{id}")
+	public ResponseEntity<Object> updateUser(@PathVariable("id") int userId, @RequestBody User user){
+		if(uServ.getUserByUserID(userId) == null) {
+			uServ.insertUser(user);
+			return new ResponseEntity<>(uServ.getUserByUserID(user.getUserID()), HttpStatus.CREATED);
+		}
+		uServ.updateUser(user);
+			return new ResponseEntity<>(user.getuName()+ "has been updated.", HttpStatus.ACCEPTED);
 	}
 
 }

@@ -62,7 +62,7 @@ public class User {
 		this.roleID = roleID;
 	}
 
-	public User(String uName, String password) {
+	public User(String uName, String email) {
 		super();
 		this.uName = uName;
 		this.email = email;
