@@ -46,7 +46,7 @@ public class UserService {
 	public String deleteUser(int adminId,User user) {
 		
 		User admin = uRepo.findByUserID(adminId);
-		if(admin.getRoleID() == 1) {
+		if(admin != null && admin.getRoleID() == 1) {
 			uRepo.delete(user);
 			return "User Deleted";
 		}else throw new IllegalArgumentException("Only the admin can delete users");

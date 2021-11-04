@@ -1,4 +1,4 @@
-package com.revature.test;
+package com.revature.test.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -10,24 +10,26 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.revature.model.User;
 import com.revature.repository.UserRepo;
 import com.revature.service.UserService;
 
+@SpringBootTest
 public class UserServiceTesting {
 
 	
 	@Mock
 	private UserRepo uRepo;
 	
-	private UserService uServ;
+	@InjectMocks
+	UserService uServ;
 	private List<User> uList;
 	
 	
-	@SuppressWarnings("deprecation")
 	@BeforeEach
 	public void setUp()throws Exception{
 		 uList = new ArrayList<User>(Arrays.asList(new User(1,"SFunk", "borley1@gmail.com", "Sam", "Funk", 1), new User(2,"CVoid", "demonspawndaemnyxea@gmail.com", "Cass", "Void", 0), 
@@ -35,7 +37,6 @@ public class UserServiceTesting {
 					new User(3,"MNieves", "MNieves@gmail.com", "Michael", "Nieves", 0), new User(4,"SHarrington", "SHarrington@gmail.com", "Shawn", "Harrington", 0), 
 					new User(5,"JVeliz", "JVigil@gmail.com", "Joe", "Veliz", 0)));
 		
-		MockitoAnnotations.initMocks(this);
 		
 		when(uRepo.findAll()).thenReturn(uList);
 		when(uRepo.findByUserID(1)).thenReturn(uList.get(0));
