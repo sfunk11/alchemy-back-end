@@ -85,7 +85,7 @@ public class UserController {
 	public ResponseEntity<Object> insertUser(@RequestBody User user){
 		System.out.println(user);
 		if(uServ.getUserByUserID(user.getUserID()) != null) {
-			return new ResponseEntity<>(user.getuName() + " already exists!", HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(user.getDisplayName() + " already exists!", HttpStatus.FORBIDDEN);
 		}
 		uServ.insertUser(user);
 		return new ResponseEntity<>(uServ.getUserByUserID(user.getUserID()), HttpStatus.CREATED);
@@ -98,7 +98,7 @@ public class UserController {
 			return new ResponseEntity<>(uServ.getUserByUserID(user.getUserID()), HttpStatus.CREATED);
 		}
 		uServ.updateUser(user);
-			return new ResponseEntity<>(user.getuName()+ "has been updated.", HttpStatus.ACCEPTED);
+			return new ResponseEntity<>(user.getDisplayName()+ "has been updated.", HttpStatus.ACCEPTED);
 	}
 
 }

@@ -10,8 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name="users")
+@Data @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode  
 public class User {
 	
 	@Id
@@ -20,7 +26,7 @@ public class User {
 	private int userID;
 	
 	@Column(name="user_uname")
-	private String uName;
+	private String displayName;
 	
 
 	@Column(name="user_email", unique=true, nullable=false)
@@ -28,99 +34,29 @@ public class User {
 	private String email;
 	
 	@Column(name="user_fname")
-	private String fname;
+	private String f_name;
 	
 	@Column(name="user_lname")
-	private String lname;
+	private String l_name;
 	
 	@Column(name="user_role")
 	private int roleID;
 	
-	@OneToMany(mappedBy="uploader")
-	private List<Photo> photos;
+//	@OneToMany(mappedBy="uploader")
+//	private List<Photo> photos;
+
+	public User(String displayName, String email, String f_name, String l_name, int roleID) {
+		super();
+		this.displayName = displayName;
+		this.email = email;
+		this.f_name = f_name;
+		this.l_name = l_name;
+		this.roleID = roleID;
 	
-	public User() {
-		
 	}
-
-	public User(int userID, String uName, String email, String fname, String lname, int roleID) {
-		super();
-		this.userID = userID;
-		this.uName = uName;
-		this.email = email;
-		this.fname = fname;
-		this.lname = lname;
-		this.roleID = roleID;
-	}
-
-	public User(String uName, String email, String fname, String lname, int roleID) {
-		super();
-		this.uName = uName;
-		this.email = email;
-		this.fname = fname;
-		this.lname = lname;
-		this.roleID = roleID;
-	}
-
-	public User(String uName, String email) {
-		super();
-		this.uName = uName;
-		this.email = email;
-	}
-
-	public int getUserID() {
-		return userID;
-	}
-
-	public void setUserID(int userID) {
-		this.userID = userID;
-	}
-
-	public String getuName() {
-		return uName;
-	}
-
-	public void setuName(String uName) {
-		this.uName = uName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getFname() {
-		return fname;
-	}
-
-	public void setFname(String fname) {
-		this.fname = fname;
-	}
-
-	public String getLname() {
-		return lname;
-	}
-
-	public void setLname(String lname) {
-		this.lname = lname;
-	}
-
-	public int getRoleID() {
-		return roleID;
-	}
-
-	public void setRoleID(int roleID) {
-		this.roleID = roleID;
-	}
-
-	@Override
-	public String toString() {
-		return "User [userID=" + userID + ", uName=" + uName + ", email=" + email + ", fname=" + fname
-				+ ", lname=" + lname + ", roleID=" + roleID + "]";
-	}
+	
+	
+	
 	
 	
 
