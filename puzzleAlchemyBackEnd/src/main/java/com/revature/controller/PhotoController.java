@@ -45,7 +45,7 @@ public class PhotoController {
 	            path = "",
 	            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
 	            produces = MediaType.APPLICATION_JSON_VALUE
-	    )
+	    )    
 	    public ResponseEntity<Photo> savePhoto(@RequestParam("title") String title,
 	                                         @RequestParam("description") String description,
 	                                         @RequestParam("file") MultipartFile file, @RequestParam("uploader") String name) {
