@@ -63,7 +63,14 @@ public class PhotoServiceImpl implements PhotoService{
                 .build();
         photo.setUploader(uRepo.findByEmail(uploader));
         pRepo.save(photo);
-        return pRepo.findByTitle(photo.getTitle());
+        Photo newPHoto = pRepo.findByTitle(photo.getTitle());
+        try {
+			splitPhoto(newPHoto.getId());
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+        return newPHoto;
     }
 	@Override
 	public byte[] downloadPhoto(Long id) {
@@ -118,7 +125,7 @@ public class PhotoServiceImpl implements PhotoService{
 		 User currentUser = uServ.getUserByUserID(userId);
 		 if (currentUser.getRoleID() == 1) {
 			 pRepo.approvePhoto(photoId, true);
-			 splitPhoto(photoId);
+			 
 
 		 }else throw new IllegalArgumentException("Only the admin can approve photos");
 		
