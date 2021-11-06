@@ -32,6 +32,10 @@ public class UserService {
 		uRepo.save(user);
 	}
 	
+	public User updateUser(User user) {
+		uRepo.updateUserProfile(user.getDisplayName(), user.getF_name(), user.getL_name(), user.getRoleID(), user.getUserID());
+		return user;
+	}
 	
 	public User getUserByEmail(String email) {
 		return uRepo.findByEmail(email);
@@ -51,12 +55,7 @@ public class UserService {
 			return "User Deleted";
 		}else throw new IllegalArgumentException("Only the admin can delete users");
 		
-		
-	}
+	}	
 	
-	public void updateUser(User user) {
-		uRepo.save(user);
-	}
-
 }
 
