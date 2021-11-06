@@ -89,11 +89,7 @@ public class PhotoServiceImpl implements PhotoService{
 	public List<Photo> getAllApprovedPuzzles(){
 		List<Photo> photos = new ArrayList<>();
 		pRepo.findAll().forEach(photos::add);
-		for(Photo photo:photos) {
-			if (photo.isApproved() == false){
-				photos.remove(photo);
-			}
-		}
+	
 		return photos;
 	}
 	
