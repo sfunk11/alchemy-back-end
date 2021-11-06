@@ -84,21 +84,24 @@ public class UserController {
 	@PostMapping()
 	public ResponseEntity<Object> insertUser(@RequestBody User user){
 		System.out.println(user);
-		if(uServ.getUserByUserID(user.getUserID()) != null) {
-			return new ResponseEntity<>(user.getDisplayName() + " already exists!", HttpStatus.FORBIDDEN);
+		User originalUser = uServ.getUserByEmail(user.getEmail());
+		
+		if( originalUser != null) {
+			user.setUserID(originalUser.getUserID());
+			return new ResponseEntity<>(uServ.updateUser(user), HttpStatus.OK);
 		}
 		uServ.insertUser(user);
-		return new ResponseEntity<>(uServ.getUserByUserID(user.getUserID()), HttpStatus.CREATED);
+		return new ResponseEntity<>(uServ.getUserByEmail(user.getEmail()), HttpStatus.CREATED);
 	}
-	
-	@PostMapping ("/{id}")
-	public ResponseEntity<Object> updateUser(@PathVariable("id") int userId, @RequestBody User user){
-		if(uServ.getUserByUserID(userId) == null) {
-			uServ.insertUser(user);
-			return new ResponseEntity<>(uServ.getUserByUserID(user.getUserID()), HttpStatus.CREATED);
-		}
-		uServ.updateUser(user);
-			return new ResponseEntity<>(user.getDisplayName()+ "has been updated.", HttpStatus.ACCEPTED);
-	}
+//	
+//	@PostMapping ("/{id}")
+//	public ResponseEntity<Object> updateUser(@PathVariable("id") int userId, @RequestBody User user){
+//		if(uServ.getUserByUserID(userId) == null) {
+//			uServ.insertUser(user);
+//			return new ResponseEntity<>(uServ.getUserByUserID(user.getUserID()), HttpStatus.CREATED);
+//		}
+//		uServ.updateUser(user);
+//			return new ResponseEntity<>(user.getDisplayName()+ "has been updated.", HttpStatus.ACCEPTED);
+//	}
 
 }
