@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 
 
 
+
 public class ImageSplit {
 
 	
@@ -27,7 +28,6 @@ public class ImageSplit {
 	        
 	        // initializing array to hold subimages
 	        BufferedImage imgs[] = new BufferedImage[images];
-
 	        // Equally dividing original image into subimages
 	        int subimage_Width = image.getWidth() / columns;
 	        int subimage_Height = image.getHeight() / rows;
@@ -56,24 +56,13 @@ public class ImageSplit {
 	            }
 	        }
 
-//	        //writing sub-images into image files
-//	        for (int i = 0; i < images; i++)
-//	        {
-//	            File outputFile = new File("img" + i + ".jpg");
-//	            ImageIO.write(imgs[i], "jpg", outputFile);
-//	        }
-//	        System.out.println("Sub-images have been created.");
-	       
-//	    }
-//	
 	        	return imgs;
 	        
-
 		     
+		}
+	
 
-		     
-	}
-	}
+}
 
 
 
