@@ -9,7 +9,7 @@ import com.revature.model.Photo;
 
 public interface PhotoService {
 
-	Photo savePhoto (String title, String description, MultipartFile file, String uploader);
+	Photo savePhoto (String title, String description, MultipartFile file, String uploader, boolean makePublic);
 	byte[] downloadPhoto (Long id);
 	List<Photo> getallPhotos();
 

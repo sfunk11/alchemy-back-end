@@ -35,7 +35,7 @@ public class PhotoServiceImpl implements PhotoService{
 	
 
 	@Override
-	public Photo savePhoto(String title, String description, MultipartFile file, String uploader) {
+	public Photo savePhoto(String title, String description, MultipartFile file, String uploader, boolean makePublic) {
 		 //check if the file is empty
         if (file.isEmpty()) {
             throw new IllegalStateException("Cannot upload empty file");
@@ -62,6 +62,7 @@ public class PhotoServiceImpl implements PhotoService{
                 .imageFileName(fileName)
                 .build();
         photo.setUploader(uRepo.findByEmail(uploader));
+        photo.setMakePublic(makePublic);
         pRepo.save(photo);
         Photo newPHoto = pRepo.findByTitle(photo.getTitle());
         try {
@@ -115,7 +116,18 @@ public class PhotoServiceImpl implements PhotoService{
 		     }
 	
 	}
-
+	public void TogglePublicAccess(long photoId, String email, boolean makePublic) {
+		Photo photo = pRepo.getById(photoId);
+		System.out.println(photo.getUploader().getEmail());
+		System.out.println(email);
+		if (photo.getUploader().getEmail().trim().equals(email.trim())) {
+			pRepo.togglePublicAccess( makePublic, photoId);
+		} else throw new IllegalArgumentException("Only the owner can make photos public"); 
+		
+		
+	}
+	
+	
 	public void approvePhoto(int userId, Long photoId) throws IOException {
 		
 		 User currentUser = uServ.getUserByUserID(userId);

@@ -42,7 +42,7 @@ public class User {
 	@Column(name="user_role")
 	private int roleID;
 	
-//	@OneToMany(mappedBy="uploader")
+//	@OneToMany(mappedBy="id")
 //	private List<Photo> photos;
 
 	public User(String displayName, String email, String f_name, String l_name, int roleID) {

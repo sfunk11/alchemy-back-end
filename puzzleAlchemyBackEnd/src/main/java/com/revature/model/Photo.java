@@ -34,6 +34,8 @@ public class Photo {
 
 	    @Value("false")
 	    private boolean isApproved;
+	    @Value("false")
+	    private boolean makePublic;
 
 	
 }
