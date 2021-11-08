@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.amazonaws.AmazonServiceException;
@@ -19,6 +21,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Service
 public class FileStore {
+	
+	Logger log = LoggerFactory.getLogger(this.getClass());
+	
     private final AmazonS3 amazonS3;
 
     public void upload(String path,
@@ -34,6 +39,7 @@ public class FileStore {
         try {
             amazonS3.putObject(path, fileName, inputStream, objectMetadata);
         } catch (AmazonServiceException e) {
+        	log.error("Failed to upload the file");
             throw new IllegalStateException("Failed to upload the file", e);
         }
     }
@@ -42,8 +48,10 @@ public class FileStore {
         try {
             S3Object object = amazonS3.getObject(path, key);
             S3ObjectInputStream objectContent = object.getObjectContent();
+            log.info("download: returns byte object");
             return IOUtils.toByteArray(objectContent);
         } catch (AmazonServiceException | IOException e) {
+        	log.error("download: Failed to download the file");
             throw new IllegalStateException("Failed to download the file", e);
         }
     }
@@ -51,7 +59,9 @@ public class FileStore {
     public void deletePhoto(String path, String key) {
     	try {
     		amazonS3.deleteObject(path, key);
+    		log.info("deletePhoto: deleted from s3 amazon bucket");
     	}catch (AmazonServiceException e) {
+    		log.error("deletePhoto: Failed to delete the file");
     		throw new IllegalStateException("Failed to delete the file", e);
     	}
     }
