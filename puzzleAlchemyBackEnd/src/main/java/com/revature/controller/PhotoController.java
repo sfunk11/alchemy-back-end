@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,9 +55,11 @@ public class PhotoController {
 	    )    
 	    public ResponseEntity<Photo> savePhoto(@RequestParam("title") String title,
 	                                         @RequestParam("description") String description,
+
 	                                         @RequestParam("file") MultipartFile file, @RequestParam("uploader") String name) {
 	    	log.info("post requested photo saved to bucket");
 	    	return new ResponseEntity<>(service.savePhoto(title, description, file, name), HttpStatus.OK);
+
 	    }
 
 	    @GetMapping(value = "/{id}")
@@ -80,5 +83,9 @@ public class PhotoController {
 	    	return new ResponseEntity<Object>(service.deleteRejectedPhoto(adminId,photoId), HttpStatus.ACCEPTED);
 	    }
 	   
+	    @PutMapping("/{id}/{email}/{makePublic}")
+	    public void togglePublicAccess (@PathVariable("id")long photoId, @PathVariable("email")String email, @PathVariable("makePublic")boolean makePublic) {
+	    	service.TogglePublicAccess(photoId, email, makePublic);
+	    }
 }
 

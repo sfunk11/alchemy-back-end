@@ -36,6 +36,10 @@ public class UserService {
 		uRepo.save(user);
 	}
 	
+	public User updateUser(User user) {
+		uRepo.updateUserProfile(user.getDisplayName(), user.getF_name(), user.getL_name(), user.getRoleID(), user.getUserID());
+		return user;
+	}
 	
 	public User getUserByEmail(String email) {
 		return uRepo.findByEmail(email);
@@ -54,6 +58,7 @@ public class UserService {
 			uRepo.delete(user);
 			log.info("deleteUser: User Deleted");
 			return "User Deleted";
+
 		}
 		else 
 			{
@@ -62,10 +67,7 @@ public class UserService {
 			}
 		
 	}
-	
-	public void updateUser(User user) {
-		uRepo.save(user);
-	}
 
+	
 }
 
