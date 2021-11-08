@@ -4,10 +4,10 @@
 
 ## Technologies Used
 
-   Java - 1.8
-   Spring Boot & Data
-   PostgreSQL
-   AWS: S3, RDS and EC2
+   - Java - 1.8
+   - Spring Boot & Data
+   - PostgreSQL
+   - AWS: S3, RDS and EC2
 
 
 ## Features
