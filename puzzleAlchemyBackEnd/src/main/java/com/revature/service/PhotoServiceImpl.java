@@ -94,6 +94,7 @@ public class PhotoServiceImpl implements PhotoService{
 
 	@Override
 	public List<Photo> getallPhotos() {
+		System.out.println("in service");
 		List<Photo> photos = new ArrayList<>();
         pRepo.findAll().forEach(photos::add);
         log.info("getAllPhotos returns all photos");
