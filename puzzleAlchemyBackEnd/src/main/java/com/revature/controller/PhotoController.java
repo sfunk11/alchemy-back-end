@@ -23,14 +23,17 @@ import com.revature.model.Photo;
 import com.revature.service.PhotoServiceImpl;
 
 import lombok.AllArgsConstructor;
-
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @RestController
 @RequestMapping("/photos")
 @AllArgsConstructor
 @CrossOrigin("*")
+@NoArgsConstructor
 public class PhotoController {
-	
-	Logger log = LoggerFactory.getLogger(this.getClass());
+
+//	Logger log = LoggerFactory.getLogger(this.getClass());
 
 
 	private PhotoServiceImpl service;
@@ -55,12 +58,10 @@ public class PhotoController {
 	    )    
 	    public ResponseEntity<Photo> savePhoto(@RequestParam("title") String title,
 	                                         @RequestParam("description") String description,
-
-	                                         @RequestParam("file") MultipartFile file, @RequestParam("uploader") String name) {
-	    	log.info("post requested photo saved to bucket");
-	    	return new ResponseEntity<>(service.savePhoto(title, description, file, name), HttpStatus.OK);
-
+	                                         @RequestParam("file") MultipartFile file, @RequestParam("uploader") String name, @RequestParam("makePublic")boolean makePublic) {
+	        return new ResponseEntity<>(service.savePhoto(title, description, file, name, makePublic), HttpStatus.OK);
 	    }
+
 
 	    @GetMapping(value = "/{id}")
 	    public byte[] downloadPhoto(@PathVariable("id") Long id) {

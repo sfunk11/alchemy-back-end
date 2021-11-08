@@ -1,5 +1,6 @@
 package com.revature.service;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -11,8 +12,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.imageio.ImageIO;
-
-import java.awt.image.BufferedImage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,12 +25,14 @@ import com.revature.repository.UserRepo;
 import com.revature.util.ImageSplit;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class PhotoServiceImpl implements PhotoService{
 	
-	Logger log = LoggerFactory.getLogger(this.getClass());
+//	Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	private final FileStore fileStore;
 	private final PhotoRepo pRepo;
