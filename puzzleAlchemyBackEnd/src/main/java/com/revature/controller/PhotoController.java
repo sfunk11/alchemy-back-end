@@ -3,8 +3,7 @@ package com.revature.controller;
 import java.io.IOException;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,32 +22,32 @@ import com.revature.model.Photo;
 import com.revature.service.PhotoServiceImpl;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/photos")
 @AllArgsConstructor
 @CrossOrigin("*")
-@NoArgsConstructor
+
 public class PhotoController {
 
 //	Logger log = LoggerFactory.getLogger(this.getClass());
 
-
+	@Autowired
 	private PhotoServiceImpl service;
 
 	
 	 @GetMapping()
 	    public ResponseEntity<List<Photo>> getAllPuzzles() {
 		 log.info("/photos requested returns all puzzles");
-	        return new ResponseEntity<>(service.getAllApprovedPuzzles(), HttpStatus.OK);
+	        return new ResponseEntity<List<Photo>>(service.getAllApprovedPuzzles(), HttpStatus.OK);
 	    }
 	
 	 @GetMapping("/admin")
 	    public ResponseEntity<List<Photo>> getAllPhotos() {
+		 System.out.println("in controller");
 		 log.info("/admin requested returns list of all photos");
-	        return new ResponseEntity<>(service.getallPhotos(), HttpStatus.OK);
+	        return new ResponseEntity<List<Photo>>(service.getallPhotos(), HttpStatus.OK);
 	    }
 
 	    @PostMapping(
