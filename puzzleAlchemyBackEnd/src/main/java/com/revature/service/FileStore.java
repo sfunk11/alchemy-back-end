@@ -17,14 +17,20 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@NoArgsConstructor
 @AllArgsConstructor
 @Service
 public class FileStore {
 	
-	Logger log = LoggerFactory.getLogger(this.getClass());
+//	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
-    private final AmazonS3 amazonS3;
+    private AmazonS3 amazonS3; 
+  
+    
 
     public void upload(String path,
                        String fileName,
