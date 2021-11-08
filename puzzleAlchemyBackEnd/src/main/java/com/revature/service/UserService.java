@@ -2,6 +2,8 @@ package com.revature.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,8 @@ import com.revature.repository.UserRepo;
 
 @Service
 public class UserService {
+	
+	Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	private UserRepo uRepo;
 	
@@ -48,9 +52,14 @@ public class UserService {
 		User admin = uRepo.findByUserID(adminId);
 		if(admin != null && admin.getRoleID() == 1) {
 			uRepo.delete(user);
+			log.info("deleteUser: User Deleted");
 			return "User Deleted";
-		}else throw new IllegalArgumentException("Only the admin can delete users");
-		
+		}
+		else 
+			{
+			log.error("deleteUser: Only the admin can delete users" );
+			throw new IllegalArgumentException("Only the admin can delete users");
+			}
 		
 	}
 	
