@@ -21,14 +21,14 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@NoArgsConstructor
+
 @AllArgsConstructor
 @Service
 public class FileStore {
 	
 //	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
-    private AmazonS3 amazonS3; 
+    private final AmazonS3 amazonS3; 
   
     
 
